@@ -43,6 +43,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, precision_score
+from sklearn.metrics import classification_report
 
 def train_model(df):
     """
@@ -62,7 +63,8 @@ def train_model(df):
     pipeline = Pipeline([
         ("tfidf", TfidfVectorizer(
             max_features=5000,
-            ngram_range=(1,2)
+            ngram_range=(1,2),
+            min_df= 2
         )),
         ("model", MultinomialNB())
     ])
@@ -73,6 +75,7 @@ def train_model(df):
 
     print("Accuracy:", accuracy_score(y_test, y_pred))
     print("Precision:", precision_score(y_test, y_pred))
+    print(classification_report(y_test, y_pred))
 
     return pipeline
 
@@ -81,6 +84,8 @@ def save_model(model):
 
     with open("models/spam_pipeline.pkl", "wb") as f:
         pickle.dump(model, f)
+        
+
 
 
 if __name__ == "__main__":
