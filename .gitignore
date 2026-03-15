@@ -11,7 +11,6 @@ env/
 .ipynb_checkpoints/
 
 # Model files
-*.pkl
 *.joblib
 *.h5
 
